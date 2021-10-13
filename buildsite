@@ -1,0 +1,93 @@
+
+# site.data should create the site/network/modules/libvirt_site_network directory
+#
+
+# set the current location so we know where to return to
+HERE=$(pwd)
+
+for i in $(sed -e "s/ //g" site.data)
+do
+  SITENAME=$(  echo $i | cut -f1 -d,)
+  SITEINIT=$(  echo $i | cut -f2 -d,)
+  SITENET=$(   echo $i | cut -f3 -d,)
+  INTERFACE=$( echo $i | cut -f4 -d,)
+  MACADDRESS=$(echo $i | cut -f5 -d,)
+  IPADDRESS=$( echo $i | cut -f6 -d,)
+  IPSTART=$(   echo $i | cut -f7 -d,)
+  IPEND=$(     echo $i | cut -f8 -d,)
+  LIBVIRT="${SITENAME}"
+#  LIBVIRT="${SITENAME}/network/modules/${SITENET}"
+#  VIRTFILE="network_config.xml"
+
+# return to the default directory
+  cd ${HERE}
+
+# create the directory first.
+  if [[ ! -d ${LIBvIRT} ]]
+  then
+    mkdir -p ${SITENAME}
+  fi
+
+# make the modules directory
+  if [[ ! -d modules/single ]]
+  then
+    mkdir -p modules/single
+  fi
+  if [[ ! -d modules/dual ]]
+  then
+    mkdir -p modules/dual
+  fi
+
+# just initializing so copying more than once, no biggie.
+  cp templates/libvirt.single.tf modules/single/libvirt.tf
+  cp templates/libvirt.dual.tf modules/dual/libvirt.tf
+
+# copy the initialize script which initializes a site
+  cp templates/initialize ${SITENAME}/
+
+# copy the teardown script which tears down a site
+  cp templates/teardown ${SITENAME}/
+
+# make the appropriate directories 
+# create the data file in the new directory
+# boulder/[physical server]/[main]/[servers]
+  for j in $(sed -e "s/ //g" server.data | grep ${SITEINIT} | awk -F, '{print $2"/"$3"/"$4"/"$5":"$6}')
+  do
+    SERVERPATH=$(echo $j | cut -f1 -d:)
+    SERVERNAME=$(echo $j | cut -f2 -d:)
+
+    cd ${HERE}
+
+    if [[ ! -d ${SERVERPATH} ]]
+    then
+      mkdir -p ${SERVERPATH}
+    fi
+
+    SEARCH=$(echo ${SERVERPATH} | sed -e "s:/:,:g")
+
+    sed -e "s/ //g" server.data | grep ${SEARCH} > ${SERVERPATH}/server.data
+
+# copy the cloud_init file up
+    cp templates/cloud_init.yaml ${SERVERPATH}/${SERVERNAME}.yaml
+
+# and now build the script
+    sed -e "s/SITENAME/${SITENAME}/g" \
+        -e "s/SITENET/${SITENET}/g" \
+        templates/maketf > ${SERVERPATH}/maketf
+# set to execute
+    chmod 755 ${SERVERPATH}/maketf
+
+# now we build the environment. It should JUST WORK!
+    cd ${SERVERPATH}
+
+# make the terraform file
+    ./maketf > main.tf
+    rm maketf
+
+# and remove the data file
+    rm server.data
+
+  done
+
+done
+

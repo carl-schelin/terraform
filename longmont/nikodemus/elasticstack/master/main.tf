@@ -1,0 +1,54 @@
+terraform {
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.6.10"
+    }
+  }
+}
+
+module "longmont-server-08" {
+# load the module
+  source = "../../../../modules/single/"
+
+# set the variables
+  machine_name = "lnmt1cuelkmstr1"
+  svc_bridge = "br0"
+  svc_address = "10.100.104.8"
+  mac_address = "52:54:00;9B;68:08"
+  ram_request = "4096"
+  cpu_request = "2"
+  machine_image = "centos8_20g.qcow2"
+  user_data_path = "${path.module}/lnmt1cuelkmstr1.yaml"
+}
+
+module "longmont-server-09" {
+# load the module
+  source = "../../../../modules/single/"
+
+# set the variables
+  machine_name = "lnmt1cuelkmstr2"
+  svc_bridge = "br0"
+  svc_address = "10.100.104.9"
+  mac_address = "52:54:00;9B;68:09"
+  ram_request = "4096"
+  cpu_request = "2"
+  machine_image = "centos8_20g.qcow2"
+  user_data_path = "${path.module}/lnmt1cuelkmstr2.yaml"
+}
+
+module "longmont-server-10" {
+# load the module
+  source = "../../../../modules/single/"
+
+# set the variables
+  machine_name = "lnmt1cuelkmstr3"
+  svc_bridge = "br0"
+  svc_address = "10.100.104.10"
+  mac_address = "52:54:00;9B;68:0A"
+  ram_request = "4096"
+  cpu_request = "2"
+  machine_image = "centos8_20g.qcow2"
+  user_data_path = "${path.module}/lnmt1cuelkmstr3.yaml"
+}
+

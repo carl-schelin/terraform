@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.6.10"
+    }
+  }
+}
+
+module "longmont-server-13" {
+# load the module
+  source = "../../../../modules/single/"
+
+# set the variables
+  machine_name = "lnmt1cuomapisvr1"
+  svc_bridge = "br0"
+  svc_address = "10.100.104.13"
+  mac_address = "52:54:00;9B;68:0D"
+  ram_request = "4096"
+  cpu_request = "2"
+  machine_image = "centos8_20g.qcow2"
+  user_data_path = "${path.module}/lnmt1cuomapisvr1.yaml"
+}
+
+module "longmont-server-21" {
+# load the module
+  source = "../../../../modules/single/"
+
+# set the variables
+  machine_name = "lnmt1cuomhap1"
+  svc_bridge = "br0"
+  svc_address = "10.100.104.21"
+  mac_address = "52:54:00;9B;68:15"
+  ram_request = "4096"
+  cpu_request = "2"
+  machine_image = "centos8_20g.qcow2"
+  user_data_path = "${path.module}/lnmt1cuomhap1.yaml"
+}
+

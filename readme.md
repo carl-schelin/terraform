@@ -14,4 +14,17 @@ I'm generally working on mimicing a production type site so I have various envir
 
 Note that under normal circumstances, passwords and ssh keys wouldn't be in the repos. As this is a very local and blocked from external access site, I'm not currently too worried about it. I do intend on further research to properly manage such secrets but for now, I wanted to get the files out so I can back out if I make a horrible mistake.
 
+### Configuration
+
+The server.data file contains the configuration of every server for every site. The site.data file contains the configuration for each unique site.
+
+The buildsite script takes the information from the site.data file and prepares the directory structure, then uses the server.data file and the files in the templates to create the individual cloud-init file and make.tf file.
+
+In each site's main directory is an initialize script. This script builds all the servers for the site. There is also a teardown script. This script runs a terraform destroy on all servers for the site.
+
+The rmsite script deletes all the sites outright. The resetsite script uses the virsh command to remove all the _domain and _pool entries.
+
+For my testing, I populate the server.data and site.data files then run the buildsite script. Then go into the site directory and run the initialize script. This brings up all the guests.
+
+If something gets screwed up, I may need to run the resetsite script to clean up all the guests and then rmsite script to clean up the directory structure. I fix the files in the template directory and try again.
 

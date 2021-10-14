@@ -28,7 +28,7 @@ do
   echo "  machine_name = \"${MACHINE_NAME}\""
   echo "  svc_bridge = \"br0\""
   echo "  svc_address = \"${IP_ADDRESS}\""
-  echo "  mac_address = \"${MAC_ADDRESS}\""
+  echo "  svc_mac = \"${MAC_ADDRESS}\""
   echo "  ram_request = \"${RAM_REQUEST}\""
   echo "  cpu_request = \"${CPU_REQUEST}\""
   echo "  machine_image = \"${MACHINE_IMAGE}\""

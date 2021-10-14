@@ -14,6 +14,10 @@ I'm generally working on mimicing a production type site so I have various envir
 
 Note that under normal circumstances, passwords and ssh keys wouldn't be in the repos. As this is a very local and blocked from external access site, I'm not currently too worried about it. I do intend on further research to properly manage such secrets but for now, I wanted to get the files out so I can back out if I make a horrible mistake.
 
+### Prerequesites
+
+You'll need to build the KVM host before you can run these. In my playbooks repo, in the libvirt directory, check out the readme.md on which binary files you need in order to prepare the KVM host.
+
 ### Configuration
 
 The server.data file contains the configuration of every server for every site. The site.data file contains the configuration for each unique site.

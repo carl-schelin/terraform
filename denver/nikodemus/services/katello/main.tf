@@ -15,7 +15,7 @@ module "denver-server-02" {
   machine_name = "dnvr0cuomkat1"
   svc_bridge = "br0"
   svc_address = "10.100.100.2"
-  mac_address = "52:54:00:9B:65:00"
+  svc_mac = "52:54:00:9B:65:00"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_300g.qcow2"

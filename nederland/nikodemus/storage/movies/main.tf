@@ -15,7 +15,7 @@ module "nederland-server-06" {
   machine_name = "ndld1cuomovie1"
   svc_bridge = "br0"
   svc_address = "10.100.105.6"
-  mac_address = "52:54:00:9B:69:06"
+  svc_mac = "52:54:00:9B:69:06"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"

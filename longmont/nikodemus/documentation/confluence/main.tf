@@ -15,7 +15,7 @@ module "longmont-server-17" {
   machine_name = "lnmt1cuomcon1"
   svc_bridge = "br0"
   svc_address = "10.100.104.17"
-  mac_address = "52:54:00;9B;68:11"
+  svc_mac = "52:54:00;9B;68:11"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"

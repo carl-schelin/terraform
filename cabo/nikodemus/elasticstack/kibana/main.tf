@@ -15,7 +15,7 @@ module "cabo-server-06" {
   machine_name = "cabo0cuomifek1"
   svc_bridge = "br0"
   svc_address = "10.100.102.6"
-  mac_address = "52:54:00:9B:66:06"
+  svc_mac = "52:54:00:9B:66:06"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"

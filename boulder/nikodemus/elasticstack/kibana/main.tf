@@ -15,7 +15,7 @@ module "boulder-server-13" {
   machine_name = "bldr0cuomifek1"
   svc_bridge = "br0"
   svc_address = "10.100.101.13"
-  mac_address = "52:54:00:9B:65:0D"
+  svc_mac = "52:54:00:9B:65:0D"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"

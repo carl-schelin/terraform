@@ -7,87 +7,127 @@ HERE=$(pwd)
 
 for i in $(sed -e "s/ //g" site.data)
 do
-  SITENAME=$(  echo $i | cut -f1 -d,)
-  SITEINIT=$(  echo $i | cut -f2 -d,)
-  SITENET=$(   echo $i | cut -f3 -d,)
-  INTERFACE=$( echo $i | cut -f4 -d,)
-  MACADDRESS=$(echo $i | cut -f5 -d,)
-  IPADDRESS=$( echo $i | cut -f6 -d,)
-  IPSTART=$(   echo $i | cut -f7 -d,)
-  IPEND=$(     echo $i | cut -f8 -d,)
-  LIBVIRT="${SITENAME}"
-#  LIBVIRT="${SITENAME}/network/modules/${SITENET}"
-#  VIRTFILE="network_config.xml"
+  SITENAME=$(    echo $i | cut -f1 -d,)
+  SITEINIT=$(    echo $i | cut -f2 -d,)
+  ETH0_GATEWAY=$(echo $i | cut -f3 -d,)
+  ETH1_GATEWAY=$(echo $i | cut -f4 -d,)
+  ETH0_NETWORK=$(echo $i | cut -f5 -d,)
+  ETH1_NETWORK=$(echo $i | cut -f6 -d,)
+
+  echo "Buildiung site: ${SITENAME}"
 
 # return to the default directory
   cd ${HERE}
 
 # create the directory first.
-  if [[ ! -d ${LIBvIRT} ]]
+  if [[ ! -d ${SITENAME} ]]
   then
+    echo "Create ${SITENAME}"
     mkdir -p ${SITENAME}
   fi
 
-# make the modules directory
+# make the single interface modules directory
   if [[ ! -d modules/single ]]
   then
+    echo "Create modules/single"
     mkdir -p modules/single
   fi
+# make the dual interface modules directory
   if [[ ! -d modules/dual ]]
   then
+    echo "Create modules/dual"
     mkdir -p modules/dual
   fi
 
 # just initializing so copying more than once, no biggie.
+  echo "Copy templates/initialize ${SITENAME}/"
   cp templates/libvirt.single.tf modules/single/libvirt.tf
   cp templates/libvirt.dual.tf modules/dual/libvirt.tf
 
 # copy the initialize script which initializes a site
+  echo "Copy the templates/initialize ${SITENAME}/"
   cp templates/initialize ${SITENAME}/
 
 # copy the teardown script which tears down a site
+  echo "Copy the templates/teardown ${SITENAME}/"
   cp templates/teardown ${SITENAME}/
 
 # make the appropriate directories 
 # create the data file in the new directory
 # boulder/[physical server]/[main]/[servers]
-  for j in $(sed -e "s/ //g" server.data | grep ${SITEINIT} | awk -F, '{print $2"/"$3"/"$4"/"$5":"$6}')
+  echo "Create the appropriate directories"
+  for j in $(grep "${SITEINIT}911" server.data | sed -e "s/ //g")
   do
-    SERVERPATH=$(echo $j | cut -f1 -d:)
-    SERVERNAME=$(echo $j | cut -f2 -d:)
+    SITEPATH=$(        echo $j | awk -F, '{print $2"/"$3"/"$4"/"$5')
+    SERVERNAME=$(      echo $j | awk -F, '{print $6}')
+    ETH0_MAC=$(        echo $j | awk -F, '{print $8}')
+    ETH0_IPADDRESS=$(  echo $j | awk -F, '{print $9}')
+    ETH1_MAC=$(        echo $j | awk -F, '{print $11}')
+    ETH1_IPADDRESS=$(  echo $j | awk -F, '{print $12}')
 
     cd ${HERE}
 
-    if [[ ! -d ${SERVERPATH} ]]
+    if [[ ! -d ${SITEPATH} ]]
     then
-      mkdir -p ${SERVERPATH}
+      mkdir -p ${SITEPATH}
     fi
 
-    SEARCH=$(echo ${SERVERPATH} | sed -e "s:/:,:g")
+    SEARCH=$(echo ${SITEPATH} | sed -e "s:/:,:g")
 
-    sed -e "s/ //g" server.data | grep ${SEARCH} > ${SERVERPATH}/server.data
+    echo "Create ${SITEPATH}/server.data"
+    sed -e "s/ //g" server.data | grep ${SEARCH} > ${SITEPATH}/server.data
 
 # copy the cloud_init file up
-    cp templates/cloud_init.yaml ${SERVERPATH}/${SERVERNAME}.yaml
+# need the IP Address and the Gateway.
+    if [[ ! -z ${ETH1_MAC} ]]
+    then
+      echo "Copy templates/cloud-init.single.yaml ${SITEPATH}/${SERVERNAME}.yaml"
+      sed -e "s/ETH0_NETWORK/${ETH0_NETWORK}/g" |
+          -e "s/ETH0_GATEWAY/${ETH0_GATEWAY}/g" |
+          -e "s/ETH0_IPADDRESS/${ETH0_IPADDRESS}/g" |
+          -e "s/ETH0_MAC/${ETH0_MAC}/g" |
+          -e "s/SITEINIT/${SITEINIT}/g" |
+          -e "s/SERVERNAME/${SERVERNAME}/g" |
+        templates/cloud_init.single.yaml > ${SITEPATH}/${SERVERNAME}.yaml
+    else
+      echo "Copy templates/cloud-init.dual.yaml ${SITEPATH}/${SERVERNAME}.yaml"
+      sed -e "s/ETH0_NETWORK/${ETH0_NETWORK}/g" |
+          -e "s/ETH0_GATEWAY/${ETH0_GATEWAY}/g" |
+          -e "s/ETH1_NETWORK/${ETH1_NETWORK}/g" |
+          -e "s/ETH1_GATEWAY/${ETH1_GATEWAY}/g" |
+          -e "s/ETH0_IPADDRESS/${ETH0_IPADDRESS}/g" |
+          -e "s/ETH1_IPADDRESS/${ETH1_IPADDRESS}/g" |
+          -e "s/ETH0_MAC/${ETH0_MAC}/g" |
+          -e "s/ETH1_MAC/${ETH1_MAC}/g" |
+          -e "s/SITEINIT/${SITEINIT}/g" |
+          -e "s/SERVERNAME/${SERVERNAME}/g" |
+        templates/cloud_init.dual.yaml > ${SITEPATH}/${SERVERNAME}.yaml
+    fi
 
 # and now build the script
+    echo "Build the ${SITEPATH}/maketf script"
     sed -e "s/SITENAME/${SITENAME}/g" \
         -e "s/SITENET/${SITENET}/g" \
         templates/maketf > ${SERVERPATH}/maketf
 # set to execute
-    chmod 755 ${SERVERPATH}/maketf
+    echo "Set ${SITEPATH}/maketf to execute"
+    chmod 755 ${SITEPATH}/maketf
 
 # now we build the environment. It should JUST WORK!
-    cd ${SERVERPATH}
+    echo "Go to ${SITEPATH}"
+    cd ${SITEPATH}
 
 # make the terraform file
+    echo "Run maketf"
     ./maketf > main.tf
-    rm maketf
 
-# and remove the data file
+    echo "Delete old files
+    rm maketf
     rm server.data
 
   done
+
+  echo "Done with ${SITENAME}"
 
 done
 

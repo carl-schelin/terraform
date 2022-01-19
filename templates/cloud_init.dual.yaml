@@ -28,6 +28,7 @@ write_files:
     IPADDR=ETH0_IPADDRESS
     HWADDR=ETH0_MAC
     GATEWAY=ETH0_GATEWAY
+    PREFIX=24
     ONBOOT=yes
     STARTMODE=auto
     TYPE=Ethernet
@@ -48,6 +49,7 @@ write_files:
     IPADDR=ETH1_IPADDRESS
     HWADDR=ETH1_MAC
     GATEWAY=ETH1_GATEWAY
+    PREFIX=24
     ONBOOT=yes
     STARTMODE=auto
     TYPE=Ethernet

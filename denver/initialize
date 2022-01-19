@@ -23,3 +23,7 @@ do
 
 done
 
+virsh -c qemu:///system list --all
+
+virsh -c qemu:///system pool-list --all
+

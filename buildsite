@@ -92,7 +92,7 @@ do
   then
     echo "Create the appropriate directories"
   fi
-  for j in $(grep "${SITEINIT}911${SITEPOST}" server.data | sed -e "s/ //g")
+  for j in $(grep "${SITEINIT}" server.data | sed -e "s/ //g")
   do
     SITEPATH=$(      echo $j | awk -F, '{print $2"/"$3"/"$4"/"$5}')
     SERVERNAME=$(    echo $j | awk -F, '{print $6}')

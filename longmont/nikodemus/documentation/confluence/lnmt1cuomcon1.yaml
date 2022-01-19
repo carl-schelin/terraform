@@ -18,9 +18,77 @@ users:
     ssh-authorized-keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDOZ4IXAxfRjP+/+HVrxvMD/kJUtTZ9Wef90EQmcAMQTKlNLolQ/H24qrXQXhaXSDKCH7QVJhhQc113jxOmRTwOwiWK/M0rzcGq+RA3RGoqOGYKtyFeBTZki1k2cZCRm5Jqc4wx0hOeI1SA1IWuiFAx/ga7EUdc/+1wE3OPthipvAlU9dBQvJOrjxeLT8miEjEkzGGZRojgG05GuHj6A+oslj7tmT/RMzBoomG2PIYktEcqm/ZaT5jLDQeNXIjXYToPcSoWjDvGfMk8rp83oPTHSrcCDp5bhOKL41Gw/DKxwpqp2I633ufvTXqyioYUz5oWY6hvKx5IwUIVhDDesQeR9u1nQyZHJQ3+PbjtrWdImumb6Nmwjs+gkuRD8ZjtF4zU0L5hhDqNrkCGfGIn/AbGOllsVpiiZNe8jaRFwqXgVxTOPRr1wGcNgkBJS5pNbwlSns0s81jTS4NJTpAGyTlyONLt6RUcHQXag9ljWx8/gndTO2LITj9k8vyQOv2NCKs= unixsvc@nikodemus
 
+write_files:
+- encoding: "text/plain"
+  owner: root:root
+  path: /etc/sysconfig/netowrk-scripts/ifcfg-eth0
+  content: |
+    BOOTPROTO=none
+    DEVICE=eth0
+    IPADDR=centos8_20g.qcow2
+    HWADDR=10.100.104.17
+    GATEWAY=lnmtprod
+    ONBOOT=yes
+    STARTMODE=auto
+    TYPE=Ethernet
+    USERCTL=no
+    PROXY_METHOD=none
+    BROWSER_ONLY=no
+    DEFROUTE=no
+    IPV4_FAILURE_FATAL=no
+    IPV6INIT=no
+    NAME="eth0"
+  permissions: '0644'
+- encoding: "text/plain"
+  owner: root:root
+  path: /etc/sysconfig/netowrk-scripts/ifcfg-eth1
+  content: |
+    BOOTPROTO=none
+    DEVICE=eth1
+    IPADDR=
+    HWADDR=2
+    GATEWAY=virbr5
+    ONBOOT=yes
+    STARTMODE=auto
+    TYPE=Ethernet
+    USERCTL=no
+    PROXY_METHOD=none
+    BROWSER_ONLY=no
+    DEFROUTE=yes
+    IPV4_FAILURE_FATAL=no
+    IPV6INIT=no
+    NAME="eth1"
+  permissions: '0644'
+- encoding: "text/plain"
+  owner: root:root
+  path: /etc/sysconfig/network-scripts/route-eth0
+  content: |
+    52:54:00:9B:68:01/24 via 0.0.0.0 dev eth0
+- encoding: "text/plain"
+  owner: root:root
+  path: /etc/sysconfig/network-scripts/route-eth1
+  content: |
+    10.100.104.1/24 via 0.0.0.0 dev eth1
+
+timezone: UTC
+
+fqdn: lnmt1cuomcon1.SITENAME.intenal.pri
+hostname: lnmt1cuomcon1
+
+manage_resolv_conf: true
+
+resolv_conf:
+  nameservers: ['192.168.1.254']
+  searchdomains:
+    - lnmt1.internal.pri
+  domain: lnmt1.internal.pri
+  options:
+    rotate: true
+    timeout: 1
+
 final_message: "The system is finally up, after $UPTIME seconds"
 
-# cloud-init configuration
+# cloud-init configuration assuming dhcp worked
 # install packages
 packages:
   - qemu-guest-agent
@@ -28,8 +96,15 @@ packages:
   - python
   - wget
 
-# cloud-init configuration
+# cloud-init configuration assuming no dhcp
 # run command after boot
 runcmd:
   - ["cd", "/home/unixsvc"]
+  - ["systemctl", "restart", "network"]
+  - ["yum", "install", "-y", "NetworkManager"]
+  - ["yum", "install", "-y", "python3"]
+  - ["systemctl", "enable", "NetworkManager"]
+  - ["systemctl", "start", "NetworkManager"]
+  - ["systemctl", "restart", "NetworkManager"]
+  - ["touch", "/etc/cloud/cloud-init.disabled"]
 

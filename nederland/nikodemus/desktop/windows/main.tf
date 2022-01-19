@@ -12,14 +12,14 @@ module "nederland-server-12" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomwin7"
+  machine_name = "ndld2cuomwin7"
   svc_bridge = "br0"
   svc_address = "192.168.1.187"
   svc_mac = "52:54:00:9B:69:0C"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomwin7.yaml"
+  user_data_path = "${path.module}/ndld2cuomwin7.yaml"
 }
 
 module "nederland-server-13" {
@@ -27,13 +27,13 @@ module "nederland-server-13" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomwinxp"
+  machine_name = "ndld2cuomwinxp"
   svc_bridge = "br0"
   svc_address = "192.168.1.188"
   svc_mac = "52:54:00:9B:69:0D"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomwinxp.yaml"
+  user_data_path = "${path.module}/ndld2cuomwinxp.yaml"
 }
 

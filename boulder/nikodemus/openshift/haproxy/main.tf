@@ -12,13 +12,13 @@ module "boulder-server-28" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "bldr0cuomokdhap1"
+  machine_name = "bldr1cuomokdhap1"
   svc_bridge = "br0"
   svc_address = "192.168.1.77"
   svc_mac = "52:54:00:9B:65:1C"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/bldr0cuomokdhap1.yaml"
+  user_data_path = "${path.module}/bldr1cuomokdhap1.yaml"
 }
 

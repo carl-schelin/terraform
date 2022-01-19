@@ -12,14 +12,14 @@ module "nederland-server-04" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomdev1"
+  machine_name = "ndld2cuomdev1"
   svc_bridge = "br0"
   svc_address = "192.168.1.179"
   svc_mac = "52:54:00:9B:69:04"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomdev1.yaml"
+  user_data_path = "${path.module}/ndld2cuomdev1.yaml"
 }
 
 module "nederland-server-05" {
@@ -27,14 +27,14 @@ module "nederland-server-05" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomgit1"
+  machine_name = "ndld2cuomgit1"
   svc_bridge = "br0"
   svc_address = "192.168.1.180"
   svc_mac = "52:54:00:9B:69:05"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomgit1.yaml"
+  user_data_path = "${path.module}/ndld2cuomgit1.yaml"
 }
 
 module "nederland-server-07" {
@@ -42,13 +42,13 @@ module "nederland-server-07" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomphoto1"
+  machine_name = "ndld2cuomphoto1"
   svc_bridge = "br0"
   svc_address = "192.168.1.182"
   svc_mac = "52:54:00:9B:69:07"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomphoto1.yaml"
+  user_data_path = "${path.module}/ndld2cuomphoto1.yaml"
 }
 

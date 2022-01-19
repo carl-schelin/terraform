@@ -12,14 +12,14 @@ module "longmont-server-46" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuomsalt1"
+  machine_name = "lnmt2cuomsalt1"
   svc_bridge = "br0"
   svc_address = "192.168.1.169"
   svc_mac = "52:54:00:9B:68:2E"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuomsalt1.yaml"
+  user_data_path = "${path.module}/lnmt2cuomsalt1.yaml"
 }
 
 module "longmont-server-49" {
@@ -27,14 +27,14 @@ module "longmont-server-49" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuomtform1"
+  machine_name = "lnmt2cuomtform1"
   svc_bridge = "br0"
   svc_address = "192.168.1.172"
   svc_mac = "52:54:00:9B:68:31"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuomtform1.yaml"
+  user_data_path = "${path.module}/lnmt2cuomtform1.yaml"
 }
 
 module "longmont-server-51" {
@@ -42,13 +42,13 @@ module "longmont-server-51" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuomvault1"
+  machine_name = "lnmt2cuomvault1"
   svc_bridge = "br0"
   svc_address = "192.168.1.174"
   svc_mac = "52:54:00:9B:68:33"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuomvault1.yaml"
+  user_data_path = "${path.module}/lnmt2cuomvault1.yaml"
 }
 

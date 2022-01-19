@@ -12,13 +12,13 @@ module "cabo-server-06" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "cabo0cuomifek1"
+  machine_name = "cabo1cuomifek1"
   svc_bridge = "br0"
   svc_address = "192.168.1.93"
   svc_mac = "52:54:00:9B:66:06"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/cabo0cuomifek1.yaml"
+  user_data_path = "${path.module}/cabo1cuomifek1.yaml"
 }
 

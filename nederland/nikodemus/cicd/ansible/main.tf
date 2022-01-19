@@ -12,13 +12,13 @@ module "nederland-server-02" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "ndld1cuomans1"
+  machine_name = "ndld2cuomans1"
   svc_bridge = "br0"
   svc_address = "192.168.1.177"
   svc_mac = "52:54:00:9B:69:02"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/ndld1cuomans1.yaml"
+  user_data_path = "${path.module}/ndld2cuomans1.yaml"
 }
 

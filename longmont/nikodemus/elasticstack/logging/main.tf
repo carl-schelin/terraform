@@ -12,14 +12,14 @@ module "longmont-server-05" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuelklog1"
+  machine_name = "lnmt2cuelklog1"
   svc_bridge = "br0"
   svc_address = "192.168.1.128"
   svc_mac = "52:54:00:9B:68:05"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuelklog1.yaml"
+  user_data_path = "${path.module}/lnmt2cuelklog1.yaml"
 }
 
 module "longmont-server-06" {
@@ -27,14 +27,14 @@ module "longmont-server-06" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuelklog2"
+  machine_name = "lnmt2cuelklog2"
   svc_bridge = "br0"
   svc_address = "192.168.1.129"
   svc_mac = "52:54:00:9B:68:06"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuelklog2.yaml"
+  user_data_path = "${path.module}/lnmt2cuelklog2.yaml"
 }
 
 module "longmont-server-07" {
@@ -42,13 +42,13 @@ module "longmont-server-07" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuelklog3"
+  machine_name = "lnmt2cuelklog3"
   svc_bridge = "br0"
   svc_address = "192.168.1.130"
   svc_mac = "52:54:00:9B:68:07"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuelklog3.yaml"
+  user_data_path = "${path.module}/lnmt2cuelklog3.yaml"
 }
 

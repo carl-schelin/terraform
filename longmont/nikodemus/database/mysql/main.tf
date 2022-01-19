@@ -12,13 +12,13 @@ module "longmont-server-53" {
   source = "../../../../modules/single/"
 
 # set the variables
-  machine_name = "lnmt1cuomysql1"
+  machine_name = "lnmt2cuomysql1"
   svc_bridge = "br0"
   svc_address = "192.168.1.176"
   svc_mac = "52:54:00:9B:68:35"
   ram_request = "4096"
   cpu_request = "2"
   machine_image = "centos8_20g.qcow2"
-  user_data_path = "${path.module}/lnmt1cuomysql1.yaml"
+  user_data_path = "${path.module}/lnmt2cuomysql1.yaml"
 }
 

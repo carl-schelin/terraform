@@ -14,7 +14,7 @@ module "boulder-server-37" {
 # set the variables
   machine_name = "bldr0cuomrepo1"
   svc_bridge = "br0"
-  svc_address = "10.100.101.37"
+  svc_address = "192.168.1.86"
   svc_mac = "52:54:00:9B:65:25"
   ram_request = "4096"
   cpu_request = "2"

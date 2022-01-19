@@ -14,7 +14,7 @@ module "longmont-server-48" {
 # set the variables
   machine_name = "lnmt1cuomsyslog"
   svc_bridge = "br0"
-  svc_address = "10.100.104.48"
+  svc_address = "192.168.1.171"
   svc_mac = "52:54:00:9B:68:30"
   ram_request = "4096"
   cpu_request = "2"

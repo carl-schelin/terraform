@@ -14,7 +14,7 @@ module "nederland-server-04" {
 # set the variables
   machine_name = "ndld1cuomdev1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.4"
+  svc_address = "192.168.1.179"
   svc_mac = "52:54:00:9B:69:04"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "nederland-server-05" {
 # set the variables
   machine_name = "ndld1cuomgit1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.5"
+  svc_address = "192.168.1.180"
   svc_mac = "52:54:00:9B:69:05"
   ram_request = "4096"
   cpu_request = "2"
@@ -44,7 +44,7 @@ module "nederland-server-07" {
 # set the variables
   machine_name = "ndld1cuomphoto1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.7"
+  svc_address = "192.168.1.182"
   svc_mac = "52:54:00:9B:69:07"
   ram_request = "4096"
   cpu_request = "2"

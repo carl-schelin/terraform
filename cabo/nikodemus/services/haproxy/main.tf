@@ -14,7 +14,7 @@ module "cabo-server-02" {
 # set the variables
   machine_name = "cabo0cuomapisvr1"
   svc_bridge = "br0"
-  svc_address = "10.100.102.2"
+  svc_address = "192.168.1.89"
   svc_mac = "52:54:00:9B:66:02"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "cabo-server-03" {
 # set the variables
   machine_name = "cabo0cuomhap1"
   svc_bridge = "br0"
-  svc_address = "10.100.102.3"
+  svc_address = "192.168.1.90"
   svc_mac = "52:54:00:9B:66:03"
   ram_request = "4096"
   cpu_request = "2"

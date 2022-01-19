@@ -14,7 +14,7 @@ module "boulder-server-33" {
 # set the variables
   machine_name = "bldr0cuomokdwrk1"
   svc_bridge = "br0"
-  svc_address = "10.100.101.33"
+  svc_address = "192.168.1.82"
   svc_mac = "52:54:00:9B:65:21"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "boulder-server-34" {
 # set the variables
   machine_name = "bldr0cuomokdwrk2"
   svc_bridge = "br0"
-  svc_address = "10.100.101.34"
+  svc_address = "192.168.1.83"
   svc_mac = "52:54:00:9B:65:22"
   ram_request = "4096"
   cpu_request = "2"
@@ -44,7 +44,7 @@ module "boulder-server-35" {
 # set the variables
   machine_name = "bldr0cuomokdwrk3"
   svc_bridge = "br0"
-  svc_address = "10.100.101.35"
+  svc_address = "192.168.1.84"
   svc_mac = "52:54:00:9B:65:23"
   ram_request = "4096"
   cpu_request = "2"

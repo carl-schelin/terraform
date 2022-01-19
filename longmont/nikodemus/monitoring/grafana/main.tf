@@ -14,7 +14,7 @@ module "longmont-server-20" {
 # set the variables
   machine_name = "lnmt1cuomgraf1"
   svc_bridge = "br0"
-  svc_address = "10.100.104.20"
+  svc_address = "192.168.1.143"
   svc_mac = "52:54:00:9B:68:14"
   ram_request = "4096"
   cpu_request = "2"

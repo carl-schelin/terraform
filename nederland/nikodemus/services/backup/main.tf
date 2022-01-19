@@ -14,7 +14,7 @@ module "nederland-server-03" {
 # set the variables
   machine_name = "ndld1cuombackup1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.3"
+  svc_address = "192.168.1.178"
   svc_mac = "52:54:00:9B:69:03"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "nederland-server-08" {
 # set the variables
   machine_name = "ndld1cuomsamba1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.8"
+  svc_address = "192.168.1.183"
   svc_mac = "52:54:00:9B:69:08"
   ram_request = "4096"
   cpu_request = "2"

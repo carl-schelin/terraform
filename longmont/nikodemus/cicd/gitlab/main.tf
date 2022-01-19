@@ -14,7 +14,7 @@ module "longmont-server-19" {
 # set the variables
   machine_name = "lnmt1cuomgitlab"
   svc_bridge = "br0"
-  svc_address = "10.100.104.19"
+  svc_address = "192.168.1.142"
   svc_mac = "52:54:00:9B:68:13"
   ram_request = "4096"
   cpu_request = "2"

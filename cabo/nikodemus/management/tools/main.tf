@@ -14,7 +14,7 @@ module "cabo-server-19" {
 # set the variables
   machine_name = "cabo0cuomtool11"
   svc_bridge = "br0"
-  svc_address = "10.100.102.19"
+  svc_address = "192.168.1.106"
   svc_mac = "52:54:00:9B:66:13"
   ram_request = "4096"
   cpu_request = "2"

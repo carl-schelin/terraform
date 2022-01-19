@@ -14,7 +14,7 @@ module "longmont-server-25" {
 # set the variables
   machine_name = "lnmt1cuomjkns1"
   svc_bridge = "br0"
-  svc_address = "10.100.104.25"
+  svc_address = "192.168.1.148"
   svc_mac = "52:54:00:9B:68:19"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "longmont-server-26" {
 # set the variables
   machine_name = "lnmt1cuomjkns2"
   svc_bridge = "br0"
-  svc_address = "10.100.104.26"
+  svc_address = "192.168.1.149"
   svc_mac = "52:54:00:9B:68:1A"
   ram_request = "2048"
   cpu_request = "2"
@@ -44,7 +44,7 @@ module "longmont-server-27" {
 # set the variables
   machine_name = "lnmt1cuomjkns3"
   svc_bridge = "br0"
-  svc_address = "10.100.104.27"
+  svc_address = "192.168.1.150"
   svc_mac = "52:54:00:9B:68:1B"
   ram_request = "2048"
   cpu_request = "2"

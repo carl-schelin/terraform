@@ -14,7 +14,7 @@ module "longmont-server-33" {
 # set the variables
   machine_name = "lnmt1cuomkube1"
   svc_bridge = "br0"
-  svc_address = "10.100.104.33"
+  svc_address = "192.168.1.156"
   svc_mac = "52:54:00:9B:68:21"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "longmont-server-34" {
 # set the variables
   machine_name = "lnmt1cuomkube2"
   svc_bridge = "br0"
-  svc_address = "10.100.104.34"
+  svc_address = "192.168.1.157"
   svc_mac = "52:54:00:9B:68:22"
   ram_request = "4096"
   cpu_request = "2"
@@ -44,7 +44,7 @@ module "longmont-server-35" {
 # set the variables
   machine_name = "lnmt1cuomkube3"
   svc_bridge = "br0"
-  svc_address = "10.100.104.35"
+  svc_address = "192.168.1.158"
   svc_mac = "52:54:00:9B:68:23"
   ram_request = "4096"
   cpu_request = "2"

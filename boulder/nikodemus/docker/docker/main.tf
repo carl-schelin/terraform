@@ -14,7 +14,7 @@ module "boulder-server-08" {
 # set the variables
   machine_name = "bldr0cuomdock1"
   svc_bridge = "br0"
-  svc_address = "10.100.101.8"
+  svc_address = "192.168.1.57"
   svc_mac = "52:54:00:9B:65:08"
   ram_request = "4096"
   cpu_request = "2"

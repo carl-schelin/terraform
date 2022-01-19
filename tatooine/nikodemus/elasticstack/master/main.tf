@@ -14,7 +14,7 @@ module "tatooine-server-10" {
 # set the variables
   machine_name = "tato0cuomifem1"
   svc_bridge = "br0"
-  svc_address = "10.100.103.10"
+  svc_address = "192.168.1.115"
   svc_mac = "52:54:00:9B:67:0A"
   ram_request = "4096"
   cpu_request = "2"
@@ -29,7 +29,7 @@ module "tatooine-server-11" {
 # set the variables
   machine_name = "tato0cuomifem2"
   svc_bridge = "br0"
-  svc_address = "10.100.103.11"
+  svc_address = "192.168.1.116"
   svc_mac = "52:54:00:9B:67:0B"
   ram_request = "4096"
   cpu_request = "2"
@@ -44,7 +44,7 @@ module "tatooine-server-12" {
 # set the variables
   machine_name = "tato0cuomifem3"
   svc_bridge = "br0"
-  svc_address = "10.100.103.12"
+  svc_address = "192.168.1.117"
   svc_mac = "52:54:00:9B:67:0C"
   ram_request = "4096"
   cpu_request = "2"

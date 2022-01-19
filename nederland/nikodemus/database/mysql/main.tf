@@ -14,7 +14,7 @@ module "nederland-server-11" {
 # set the variables
   machine_name = "ndld1cuomysql1"
   svc_bridge = "br0"
-  svc_address = "10.100.105.11"
+  svc_address = "192.168.1.186"
   svc_mac = "52:54:00:9B:69:0B"
   ram_request = "4096"
   cpu_request = "2"

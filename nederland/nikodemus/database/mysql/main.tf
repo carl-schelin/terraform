@@ -8,17 +8,17 @@ terraform {
 }
 
 module "nederland-server-11" {
-# load the module
+  # load the module
   source = "../../../../modules/single/"
 
-# set the variables
-  machine_name = "ndld2cuomysql1"
-  svc_bridge = "br0"
-  svc_address = "192.168.1.186"
-  svc_mac = "52:54:00:9B:69:0B"
-  ram_request = "4096"
-  cpu_request = "2"
-  machine_image = "centos8_20g.qcow2"
+  # set the variables
+  machine_name   = "ndld2cuomysql1"
+  svc_bridge     = "br0"
+  svc_address    = "192.168.1.186"
+  svc_mac        = "52:54:00:9B:69:0B"
+  ram_request    = "4096"
+  cpu_request    = "2"
+  machine_image  = "centos8_20g.qcow2"
   user_data_path = "${path.module}/ndld2cuomysql1.yaml"
 }
 

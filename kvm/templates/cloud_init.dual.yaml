@@ -1,0 +1,105 @@
+#cloud-config
+# vim: syntax=yaml
+# examples:
+# https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+ssh_pwauth: true
+disable_root: false
+chpasswd:
+  list: |
+     root:password
+  expire: false
+users:
+  - name: devops
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    home: /home/devops
+    shell: /bin/bash
+    lock_passwd: false
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRubHWlxllARqwimUx1ZX+ViuKWmW5myqMDV3feWJqkMrw1ZJ+rTxTim+LnJ4EcPd/o3T8MYdNpEeX+SlgO578BoKrocZn5RnHEfgCOVCRBuWrU0BCgc819QOUhW7aAx+x9JKpwp0b0pJW8rMn9QNFRSlxACaBVGRhaJ80b+4jNbUZXJ4QPtgPJEwBIKCzPfUELjdyKnwva+/VIcAy+VxRWSYJP4K3SCQFfwxBWSicWWnrq9WjUKf47Tq15bXHiNS05BfPoak9I2Ub+zC0mSZAt/Bj820hzTM5kt48BQ9ebuE9Dl29oNr1HSoVUBIrGPZ0Y6Of0b9bS2LgxDvqtMB/ devops@stg911nytestrhel.ng911.inteliquent.net
+
+write_files:
+- owner: root:root
+  path: /etc/hosts
+  content: |
+    ETH1_IPADDRESS     SERVERNAME.SITEINIT.ng911.inteliquent.net
+  append: true
+  permissions: "0644"
+- owner: root:root
+  path: /etc/sysconfig/network-scripts/ifcfg-eth0
+  content: |
+    BOOTPROTO=none
+    DEVICE=eth0
+    IPADDR=ETH0_IPADDRESS
+    HWADDR=ETH0_MAC
+    GATEWAY=ETH0_GATEWAY
+    PREFIX=ETH0_NETMASK
+    ONBOOT=yes
+    STARTMODE=auto
+    TYPE=Ethernet
+    USERCTL=no
+    PROXY_METHOD=none
+    BROWSER_ONLY=no
+    DEFROUTE=no
+    IPV4_FAILURE_FATAL=no
+    IPV6INIT=no
+    NAME="eth0"
+    DNS1=1.1.1.1
+  permissions: '0644'
+- owner: root:root
+  path: /etc/sysconfig/network-scripts/ifcfg-eth1
+  content: |
+    BOOTPROTO=none
+    DEVICE=eth1
+    IPADDR=ETH1_IPADDRESS
+    HWADDR=ETH1_MAC
+    GATEWAY=ETH1_GATEWAY
+    PREFIX=ETH1_NETMASK
+    ONBOOT=yes
+    STARTMODE=auto
+    TYPE=Ethernet
+    USERCTL=no
+    PROXY_METHOD=none
+    BROWSER_ONLY=no
+    DEFROUTE=yes
+    IPV4_FAILURE_FATAL=no
+    IPV6INIT=no
+    NAME="eth1"
+  permissions: '0644'
+- owner: root:root
+  path: /etc/sysconfig/network-scripts/route-eth0
+  content: |
+    ETH0_NETWORK/24 via 0.0.0.0 dev eth0
+- owner: root:root
+  path: /etc/sysconfig/network-scripts/route-eth1
+  content: |
+    ETH1_NETWORK/24 via 0.0.0.0 dev eth1
+    10.90.121.195/32 via ETH1_GATEWAY dev eth1
+    10.187.0.0/16 via ETH1_GATEWAY dev eth1
+
+timezone: 'UTC'
+
+fqdn: SERVERNAME.SITEINIT.ng911.inteliquent.net
+hostname: SERVERNAME
+
+manage_resolv_conf: true
+
+resolv_conf:
+  nameservers: ['1.1.1.1']
+  searchdomains:
+    - SITEINIT.ng911.inteliquent.net
+  domain: SITEINIT.ng911.inteliquent.net
+  options:
+    rotate: true
+    timeout: 1
+
+final_message: "The system is finally up, after $UPTIME seconds"
+
+# The following section are commands that can be run once the guest is up and functioning
+# The commands are run as a non-root account so any privileged work needs to be preceeded by a sudo
+# Any place where you would have a space in the command, needs to be enclosed in spaces and a comma
+# It does accept greater than symbols so you can create files during cloud-init.
+runcmd:
+  - ["touch", "/etc/cloud/cloud-init.disabled"]
+  - ["shutdown", "-t", "0", "now", "-r"]
+

@@ -1,9 +1,0 @@
-#!/bin/ksh
-
-HERE=$(pwd)
-
-for i in boulder cabo denver tatooine longmont nederland modules
-do
-  rm -rf $i
-done
-

@@ -1,0 +1,58 @@
+#!/bin/ksh
+
+# this creates a basic main.tf file. For any of the systems with a second interface (provisioning servers mainly),
+# create a maint_bridge, maint_address, and maint_mac line and point to the libvirt.two.tf template
+
+echo "terraform {"
+echo "  required_providers {"
+echo "    libvirt = {"
+echo "      source  = \"dmacvicar/libvirt\""
+echo "      version = \"0.6.10\""
+echo "    }"
+echo "  }"
+echo "}"
+echo ""
+
+for i in `cat server.data`
+do
+  NUMBER=$(       echo $i | cut -f1 -d,)
+  MACHINE_NAME=$( echo $i | cut -f6 -d,)
+  SVC_BRIDGE=$(   echo $i | cut -f7 -d,)
+  SVC_MAC=$(      echo $i | cut -f8 -d,)
+  SVC_ADDRESS=$(  echo $i | cut -f9 -d,)
+  MAINT_BRIDGE=$( echo $i | cut -f11 -d,)
+  MAINT_MAC=$(    echo $i | cut -f12 -d,)
+  MAINT_ADDRESS=$(echo $i | cut -f13 -d,)
+  MACHINE_IMAGE=$(echo $i | cut -f15 -d,)
+  RAM_REQUEST=$(  echo $i | cut -f16 -d,)
+  CPU_REQUEST=$(  echo $i | cut -f17 -d,)
+
+  echo "module \"SITENAME-server-${NUMBER}\" {"
+  echo "# load the module"
+  if [[ -z ${MAINT_BRIDGE} ]]
+  then
+    echo "  source = \"../../../../modules/single\""
+  else
+    echo "  source = \"../../../../modules/dual\""
+  fi
+  echo ""
+  echo "# set the variables"
+  echo "  machine_name = \"${MACHINE_NAME}\""
+  echo "  svc_bridge = \"${SVC_BRIDGE}\""
+  echo "  svc_mac = \"${SVC_MAC}\""
+  echo "  svc_address = \"${SVC_ADDRESS}\""
+  if [[ ! -z ${MAINT_BRIDGE} ]]
+  then
+    echo "  maint_bridge = \"${MAINT_BRIDGE}\""
+    echo "  maint_mac = \"${MAINT_MAC}\""
+    echo "  maint_address = \"${MAINT_ADDRESS}\""
+  fi
+  echo "  ram_request = \"${RAM_REQUEST}\""
+  echo "  cpu_request = \"${CPU_REQUEST}\""
+  echo "  machine_image = \"${MACHINE_IMAGE}\""
+  echo "  user_data_path = \"\${path.module}/${MACHINE_NAME}.yaml\""
+  echo "}"
+  echo ""
+
+done
+

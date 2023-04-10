@@ -1,0 +1,41 @@
+
+02,  boulder,      morgan,   kubernetes,    storage,  bldr0cuomnfs1,   00:50:56:9b:01:02,  192.168.101.170, 24,  Development Network,   bldr0cuomcentos7,   4096,   2
+03,  boulder,      morgan,   kubernetes,    haproxy,  bldr0cuomhap1,   00:50:56:9b:01:03,  192.168.101.188, 24,  Development Network,   bldr0cuomcentos7,   4096,   2
+04,  boulder,      morgan,   kubernetes,    haproxy,  bldr0cuomhap2,   00:50:56:9b:01:04,  192.168.101.182, 24,  Development Network,   bldr0cuomcentos7,   4096,   2
+05,  boulder,      morgan,   kubernetes,    control,  bldr0cuomkube1,  00:50:56:9b:01:05,  192.168.101.160, 24,  Development Network,   bldr0cuomcentos7,   8192,   4
+06,  boulder,      morgan,   kubernetes,    control,  bldr0cuomkube2,  00:50:56:9b:01:06,  192.168.101.161, 24,  Development Network,   bldr0cuomcentos7,   8192,   4
+07,  boulder,      morgan,   kubernetes,    control,  bldr0cuomkube3,  00:50:56:9b:01:07,  192.168.101.162, 24,  Development Network,   bldr0cuomcentos7,   8192,   4
+08,  boulder,      morgan,   kubernetes,    worker,   bldr0cuomknode1, 00:50:56:9b:01:08,  192.168.101.163, 24,  Development Network,   bldr0cuomcentos7,  16384,   4
+09,  boulder,      morgan,   kubernetes,    worker,   bldr0cuomknode2, 00:50:56:9b:01:09,  192.168.101.164, 24,  Development Network,   bldr0cuomcentos7,  16384,   4
+10,  boulder,      morgan,   kubernetes,    worker,   bldr0cuomknode3, 00:50:56:9b:01:0a,  192.168.101.165, 24,  Development Network,   bldr0cuomcentos7,  16384,   4
+
+02,  cabo,         morgan,   kubernetes,    storage,  cabo0cuomnfs1,   00:50:56:9b:02:02,  192.168.102.170, 24,  QA Network,            cabo0cuomcentos7,   4096,   2
+03,  cabo,         morgan,   kubernetes,    haproxy,  cabo0cuomhap1,   00:50:56:9b:02:03,  192.168.102.188, 24,  QA Network,            cabo0cuomcentos7,   4096,   2
+04,  cabo,         morgan,   kubernetes,    haproxy,  cabo0cuomhap2,   00:50:56:9b:02:04,  192.168.102.182, 24,  QA Network,            cabo0cuomcentos7,   4096,   2
+05,  cabo,         morgan,   kubernetes,    control,  cabo0cuomkube1,  00:50:56:9b:02:05,  192.168.102.160, 24,  QA Network,            cabo0cuomcentos7,   8192,   4
+06,  cabo,         morgan,   kubernetes,    control,  cabo0cuomkube2,  00:50:56:9b:02:06,  192.168.102.161, 24,  QA Network,            cabo0cuomcentos7,   8192,   4
+07,  cabo,         morgan,   kubernetes,    control,  cabo0cuomkube3,  00:50:56:9b:02:07,  192.168.102.162, 24,  QA Network,            cabo0cuomcentos7,   8192,   4
+08,  cabo,         morgan,   kubernetes,    worker,   cabo0cuomknode1, 00:50:56:9b:02:08,  192.168.102.163, 24,  QA Network,            cabo0cuomcentos7,  16384,   4
+09,  cabo,         morgan,   kubernetes,    worker,   cabo0cuomknode2, 00:50:56:9b:02:09,  192.168.102.164, 24,  QA Network,            cabo0cuomcentos7,  16384,   4
+10,  cabo,         morgan,   kubernetes,    worker,   cabo0cuomknode3, 00:50:56:9b:02:0a,  192.168.102.165, 24,  QA Network,            cabo0cuomcentos7,  16384,   4
+
+02,  tatooine,     morgan,   kubernetes,    storage,  tato0cuomnfs1,   00:50:56:9b:03:02,  192.168.103.170, 24,  Stage Network,         tato0cuomcentos7,   4096,   2
+03,  tatooine,     morgan,   kubernetes,    haproxy,  tato0cuomhap1,   00:50:56:9b:03:03,  192.168.103.188, 24,  Stage Network,         tato0cuomcentos7,   4096,   2
+04,  tatooine,     morgan,   kubernetes,    haproxy,  tato0cuomhap2,   00:50:56:9b:03:04,  192.168.103.182, 24,  Stage Network,         tato0cuomcentos7,   4096,   2
+05,  tatooine,     morgan,   kubernetes,    control,  tato0cuomkube1,  00:50:56:9b:03:05,  192.168.103.160, 24,  Stage Network,         tato0cuomcentos7,   8192,   4
+06,  tatooine,     morgan,   kubernetes,    control,  tato0cuomkube2,  00:50:56:9b:03:06,  192.168.103.161, 24,  Stage Network,         tato0cuomcentos7,   8192,   4
+07,  tatooine,     morgan,   kubernetes,    control,  tato0cuomkube3,  00:50:56:9b:03:07,  192.168.103.162, 24,  Stage Network,         tato0cuomcentos7,   8192,   4
+08,  tatooine,     morgan,   kubernetes,    worker,   tato0cuomknode1, 00:50:56:9b:03:08,  192.168.103.163, 24,  Stage Network,         tato0cuomcentos7,  16384,   4
+09,  tatooine,     morgan,   kubernetes,    worker,   tato0cuomknode2, 00:50:56:9b:03:09,  192.168.103.164, 24,  Stage Network,         tato0cuomcentos7,  16384,   4
+10,  tatooine,     morgan,   kubernetes,    worker,   tato0cuomknode3, 00:50:56:9b:03:0a,  192.168.103.165, 24,  Stage Network,         tato0cuomcentos7,  16384,   4
+
+02,  longmont,     morgan,   kubernetes,    storage,  lnmt1cuomnfs1,   00:50:56:9b:04:02,  192.168.104.170, 24,  Production Network,    lnmt1cuomcentos7,   4096,   2
+03,  longmont,     morgan,   kubernetes,    haproxy,  lnmt1cuomhap1,   00:50:56:9b:04:03,  192.168.104.188, 24,  Production Network,    lnmt1cuomcentos7,   4096,   2
+04,  longmont,     morgan,   kubernetes,    haproxy,  lnmt1cuomhap2,   00:50:56:9b:04:04,  192.168.104.182, 24,  Production Network,    lnmt1cuomcentos7,   4096,   2
+05,  longmont,     morgan,   kubernetes,    control,  lnmt1cuomkube1,  00:50:56:9b:04:05,  192.168.104.160, 24,  Production Network,    lnmt1cuomcentos7,   8192,   4
+06,  longmont,     morgan,   kubernetes,    control,  lnmt1cuomkube2,  00:50:56:9b:04:06,  192.168.104.161, 24,  Production Network,    lnmt1cuomcentos7,   8192,   4
+07,  longmont,     morgan,   kubernetes,    control,  lnmt1cuomkube3,  00:50:56:9b:04:07,  192.168.104.162, 24,  Production Network,    lnmt1cuomcentos7,   8192,   4
+08,  longmont,     morgan,   kubernetes,    worker,   lnmt1cuomknode1, 00:50:56:9b:04:08,  192.168.104.163, 24,  Production Network,    lnmt1cuomcentos7,  16384,   4
+09,  longmont,     morgan,   kubernetes,    worker,   lnmt1cuomknode2, 00:50:56:9b:04:09,  192.168.104.164, 24,  Production Network,    lnmt1cuomcentos7,  16384,   4
+10,  longmont,     morgan,   kubernetes,    worker,   lnmt1cuomknode3, 00:50:56:9b:04:0a,  192.168.104.165, 24,  Production Network,    lnmt1cuomcentos7,  16384,   4
+

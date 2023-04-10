@@ -1,0 +1,12 @@
+#!/bin/ksh
+
+HERE=$(pwd)
+
+for i in boulder cabo tatooine longmont modules
+do
+  if [[ -d $i ]]
+  then
+    rm -rf $i
+  fi
+done
+

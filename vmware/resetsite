@@ -1,0 +1,17 @@
+#!/bin/ksh
+
+# this is just a configuration in libvirt
+for i in $(virsh list --all | grep _domain | awk '{print $2}')
+do
+  virsh destroy $i
+  virsh undefine $i
+done
+
+# this is a configuration plus files so need to be deleted
+for i in $(virsh pool-list --all | grep _pool | awk '{print $1}')
+do
+  virsh pool-destroy $i
+  virsh pool-undefine $i
+  sudo rm -rf /libvirt_images/$i
+done
+

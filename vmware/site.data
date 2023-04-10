@@ -1,0 +1,8 @@
+# site     :prefix  :eth0 gatway     :eth0 net      : post info for staging server
+denver,    dnvr0,   192.168.1.254,   192.168.1.0,
+boulder,   bldr0,   192.168.101.254, 192.168.101.0,
+cabo,      cabo0,   192.168.102.254, 192.168.102.0,
+tatooine,  tato0,   192.168.103.254, 192.168.103.0,
+longmont,  lnmt1,   192.168.104.254, 192.168.104.0,
+nederland, ndld1,   192.168.105.254, 192.168.105.0,
+

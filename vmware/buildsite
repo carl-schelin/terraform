@@ -1,7 +1,4 @@
-#!/bin/ksh
-
-# site.data should create the site/network/modules/libvirt_site_network directory
-#
+#!/bin/bash
 
 if [[ ! -z ${1} ]]
 then
@@ -9,6 +6,26 @@ then
 else
   SERVERS=$(grep -v "^#" site.data | sed -e "s/ //g")
 fi
+
+# read in the two passwords for the single.tf file
+# one for vcenter password
+# and one for the template password
+
+read -p "vCenter Password: " -s VCENTER
+if [[ -z ${VCENTER} ]]
+then
+  echo "Password required."
+  exit 1
+fi
+echo ""
+
+read -p "Template Password: " -s TEMPLATE
+if [[ -z ${TEMPLATE} ]]
+then
+  echo "Password required."
+  exit 1
+fi
+echo ""
 
 DEBUG='yes'
 DEBUG='no'
@@ -21,9 +38,7 @@ do
   SITENAME=$(    echo $i | cut -f1 -d,)
   SITEINIT=$(    echo $i | cut -f2 -d,)
   ETH0_GATEWAY=$(echo $i | cut -f3 -d,)
-  ETH1_GATEWAY=$(echo $i | cut -f4 -d,)
   ETH0_NETWORK=$(echo $i | cut -f5 -d,)
-  ETH1_NETWORK=$(echo $i | cut -f6 -d,)
   SITEPOST=$(    echo $i | cut -f7 -d,)
 
   echo "Building site: ${SITENAME}"
@@ -34,53 +49,41 @@ do
 # create the directory first.
   if [[ ! -d ${SITENAME} ]]
   then
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Create ${SITENAME}"
     fi
     mkdir -p ${SITENAME}
   fi
 
-# make the single interface modules directory
-  if [[ ! -d modules/single ]]
+# make the modules directory
+  if [[ ! -d modules ]]
   then
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
-      echo "Create modules/single"
+      echo "Create modules"
     fi
-    mkdir -p modules/single
-  fi
-# make the dual interface modules directory
-  if [[ ! -d modules/dual ]]
-  then
-    if [[ $DEBUG = 'no' ]]
-    then
-      echo "Create modules/dual"
-    fi
-    mkdir -p modules/dual
+    mkdir -p modules
   fi
 
 # just initializing so copying more than once, no biggie.
-  if [[ $DEBUG = 'no' ]]
+  if [[ $DEBUG = 'yes' ]]
   then
-    echo "Copy templates/libvirt.single.tf modules/images/single/"
+    echo "Copy templates/single.tf modules/"
   fi
-  cp templates/libvirt.single.tf modules/single/libvirt.tf
-  if [[ $DEBUG = 'no' ]]
-  then
-    echo "Copy templates/libvirt.dual.tf modules/images/dual/"
-  fi
-  cp templates/libvirt.dual.tf modules/dual/libvirt.tf
+  sed -e "s/VCENTER/${VCENTER}/g" \
+      -e "s/TEMPLATE/${TEMPLATE}/g" \
+         templates/single.tf > modules/single.tf
 
 # copy the initialize script which initializes a site
-  if [[ $DEBUG = 'no' ]]
+  if [[ $DEBUG = 'yes' ]]
   then
     echo "Copy templates/initialize ${SITENAME}/"
   fi
   cp templates/initialize ${SITENAME}/
 
 # copy the teardown script which tears down a site
-  if [[ $DEBUG = 'no' ]]
+  if [[ $DEBUG = 'yes' ]]
   then
     echo "Copy templates/teardown ${SITENAME}/"
   fi
@@ -88,36 +91,18 @@ do
 
 # make the appropriate directories
 # create the data file in the new directory
-# albany/[physical server]/[main]/[servers]
-  if [[ $DEBUG = 'no' ]]
+# boulder/[application]/[servers]
+  if [[ $DEBUG = 'yes' ]]
   then
     echo "Create the appropriate directories"
   fi
-  for j in $(grep "${SITEINIT}911${SITEPOST}" server.data | sed -e "s/ //g")
+  for j in $(grep "${SITEINIT}" server.data | sed -e "s/ //g")
   do
-    SITEPATH=$(      echo $j | awk -F, '{print $2"/"$3"/"$4"/"$5}')
-    SERVERNAME=$(    echo $j | awk -F, '{print $6}')
-    ETH0_MAC=$(      echo $j | awk -F, '{print $8}')
-    ETH0_IPADDRESS=$(echo $j | awk -F, '{print $9}')
-    ETH0_NETMASK=$(  echo $j | awk -F, '{print $10}')
-    ETH1_MAC=$(      echo $j | awk -F, '{print $12}')
-    ETH1_IPADDRESS=$(echo $j | awk -F, '{print $13}')
-    ETH1_NETMASK=$(  echo $j | awk -F, '{print $14}')
-
-    CLOUDSINGLE="cloud_init.single.yaml"
-    CLOUDDUAL="cloud_init.dual.yaml"
-    grep ${SERVERNAME} ${HERE}/server.data | grep debian > /dev/null
-    if [[ $? -eq 0 ]]
-    then
-      CLOUDSINGLE="cloud_init.debian.single.yaml"
-      CLOUDDUAL="cloud_init.debian.dual.yaml"
-    fi
-    grep ${SERVERNAME} ${HERE}/server.data | grep ubuntu > /dev/null
-    if [[ $? -eq 0 ]]
-    then
-      CLOUDSINGLE="cloud_init.ubuntu.single.yaml"
-      CLOUDDUAL="cloud_init.ubuntu.dual.yaml"
-    fi
+    ENVIRONMENT=$(   echo ${j} | awk -F, '{print $2}')
+    SITEPATH=$(      echo ${j} | awk -F, '{print $2"/"$4"/"$5"/"$6}')
+    SERVERNAME=$(    echo ${j} | awk -F, '{print $6}')
+    IPADDRESS=$(     echo ${j} | awk -F, '{print $8}')
+    NETMASK=$(       echo ${j} | awk -F, '{print $9}')
 
     cd ${HERE}
 
@@ -126,53 +111,41 @@ do
       mkdir -p ${SITEPATH}
     fi
 
-    SEARCH=$(echo ${SITEPATH} | sed -e "s:/:,:g")
+    if [[ ${ENVIRONMENT} = 'boulder' ]]
+    then
+      DOMAIN="dev.internal.pri"
+    elif [[ ${ENVIRONMENT} = 'cabo' ]]
+    then
+      DOMAIN="qa.internal.pri"
+    elif [[ ${ENVIRONMENT} = 'tatooine' ]]
+    then
+      DOMAIN="stage.internal.pri"
+    elif [[ ${ENVIRONMENT} = 'longmont' ]]
+    then
+      DOMAIN="internal.pri"
+    elif [[ ${ENVIRONMENT} = 'nederland' ]]
+    then
+      DOMAIN="home.internal.pri"
+    fi
+
+    sed -e "s/HOSTNAME/${SERVERNAME}/g" \
+        -e "s/DOMAIN/${DOMAIN}/g" \
+        -e "s/IPADDRESS/${IPADDRESS}/g" \
+        -e "s/NETMASK/${NETMASK}/g" \
+        -e "s/GATEWAY/${ETH0_GATEWAY}/g" \
+        templates/script.sh > ${SITEPATH}/script.sh
+
+    SEARCH=$(echo ${j} | awk -F, '{print $2","$3","$4","$5","$6}')
 
 # create the server.data file maketf uses to create main.tf
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Create ${SITEPATH}/server.data"
     fi
     sed -e "s/ //g" server.data | grep ${SEARCH} > ${SITEPATH}/server.data
 
-# copy the cloud_init file up
-# need the IP Address and the Gateway.
-    if [[ -z ${ETH1_MAC} ]]
-    then
-      if [[ $DEBUG = 'no' ]]
-      then
-        echo "Copy templates/${CLOUDSINGLE} ${SITEPATH}/"
-      fi
-      sed -e "s/ETH0_NETWORK/${ETH0_NETWORK}/g" \
-          -e "s/ETH0_GATEWAY/${ETH0_GATEWAY}/g" \
-          -e "s/ETH0_IPADDRESS/${ETH0_IPADDRESS}/g" \
-          -e "s/ETH0_MAC/${ETH0_MAC}/g" \
-          -e "s/ETH0_NETMASK/${ETH0_NETMASK}/g" \
-          -e "s/SITEINIT/${SITEINIT}/g" \
-          -e "s/SERVERNAME/${SERVERNAME}/g" \
-          templates/${CLOUDSINGLE} > ${SITEPATH}/${SERVERNAME}.yaml
-    else
-      if [[ $DEBUG = 'no' ]]
-      then
-        echo "Copy templates/${CLOUDDUAL} ${SITEPATH}/"
-      fi
-      sed -e "s/ETH0_NETWORK/${ETH0_NETWORK}/g" \
-          -e "s/ETH0_GATEWAY/${ETH0_GATEWAY}/g" \
-          -e "s/ETH0_NETMASK/${ETH0_NETMASK}/g" \
-          -e "s/ETH1_NETWORK/${ETH1_NETWORK}/g" \
-          -e "s/ETH1_GATEWAY/${ETH1_GATEWAY}/g" \
-          -e "s/ETH1_NETMASK/${ETH1_NETMASK}/g" \
-          -e "s/ETH0_IPADDRESS/${ETH0_IPADDRESS}/g" \
-          -e "s/ETH1_IPADDRESS/${ETH1_IPADDRESS}/g" \
-          -e "s/ETH0_MAC/${ETH0_MAC}/g" \
-          -e "s/ETH1_MAC/${ETH1_MAC}/g" \
-          -e "s/SITEINIT/${SITEINIT}/g" \
-          -e "s/SERVERNAME/${SERVERNAME}/g" \
-          templates/${CLOUDDUAL} > ${SITEPATH}/${SERVERNAME}.yaml
-    fi
-
 # and now build the script
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Build the ${SITEPATH}/maketf script"
     fi
@@ -181,34 +154,34 @@ do
         templates/maketf > ${SITEPATH}/maketf
 
 # set to execute
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Set ${SITEPATH}/maketf to execute"
     fi
     chmod 755 ${SITEPATH}/maketf
 
 # now we build the environment. It should JUST WORK!
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Go to ${SITEPATH}"
     fi
     cd ${SITEPATH}
 
 # make the terraform file
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Run maketf"
     fi
     ./maketf > main.tf
 
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Delete old files"
     fi
     rm maketf
     rm server.data
 
-    if [[ $DEBUG = 'no' ]]
+    if [[ $DEBUG = 'yes' ]]
     then
       echo "Pretty printing tf files"
     fi
@@ -216,7 +189,7 @@ do
 
   done
 
-  if [[ $DEBUG = 'no' ]]
+  if [[ $DEBUG = 'yes' ]]
   then
     echo "Done with ${SITENAME}"
   fi

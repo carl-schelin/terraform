@@ -1,98 +1,107 @@
-#libvirt.tf
-terraform {
-  required_providers {
-    libvirt = {
-      source  = "dmacvicar/libvirt"
-      version = "0.6.10"
-    }
-  }
+provider "vsphere" {
+  # If you use a domain, set your login like this "Domain\\User"
+  user           = "administrator@internal.pri"
+  password       = "VCENTER"
+  vsphere_server = "lnmt1cuomvcenter.internal.pri"
+
+  # If you have a self-signed cert
+  allow_unverified_ssl = true
 }
 
-variable "machine_name" {
+variable "data_center" {
+}
+
+variable "resource_pool" {
+}
+
+variable "data_store" {
+}
+
+variable "system_network" {
 }
 
 variable "machine_image" {
 }
 
-variable "ram_request" {
+variable "module_name" {
+}
+
+variable "machine_name" {
 }
 
 variable "cpu_request" {
 }
 
-variable "svc_address" {
+variable "ram_request" {
 }
 
-variable "svc_mac" {
+variable "template_ip" {
 }
 
-variable "user_data_path" {
+
+data "vsphere_datacenter" "dc" {
+  name = var.data_center
 }
 
-# add the provider
-provider "libvirt" {
-  uri = "qemu:///system"
+# If you don't have any resource pools, put "/Resources" after cluster name
+data "vsphere_resource_pool" "pool" {
+  name          = var.resource_pool
+  datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-# create pool
-resource "libvirt_pool" "centos" {
-  name = "${var.machine_name}_pool"
-  type = "dir"
-  path = "/opt/libvirt_images/${var.machine_name}_pool/"
+# Retrieve datastore information on vsphere
+data "vsphere_datastore" "datastore" {
+  name          = var.data_store
+  datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-# create image
-resource "libvirt_volume" "image-qcow2" {
-  name   = "${var.machine_name}-amd64.qcow2"
-  pool   = libvirt_pool.centos.name
-  source = "/opt/downloads/${var.machine_image}"
-  format = "qcow2"
+# Retrieve network information on vsphere
+data "vsphere_network" "network" {
+  name          = var.system_network
+  datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-# add cloudinit disk to pool
-resource "libvirt_cloudinit_disk" "commoninit" {
-  name      = "commoninit.iso"
-  pool      = libvirt_pool.centos.name
-  user_data = data.template_file.user_data.rendered
-}
+# Retrieve template information on vsphere
+data "vsphere_virtual_machine" "template" {
+  name          = var.machine_image
+  datacenter_id = data.vsphere_datacenter.dc.id
+} 
 
-# read the configuration
-data "template_file" "user_data" {
-  template = file(var.user_data_path)
-}
+# Set vm parameters
+resource "vsphere_virtual_machine" "virtual_machine" {
+  name             = var.machine_name
+  num_cpus         = var.cpu_request
+  memory           = var.ram_request
+  datastore_id     = data.vsphere_datastore.datastore.id
+  resource_pool_id = data.vsphere_resource_pool.pool.id
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  scsi_type        = data.vsphere_virtual_machine.template.scsi_type
 
-# define KVM domain to create
-resource "libvirt_domain" "test-domain" {
-
-  # name should be unique!
-  name   = "${var.machine_name}_domain"
-  memory = var.ram_request
-  vcpu   = var.cpu_request
-  # add the cloud init disk to share user data
-  cloudinit = libvirt_cloudinit_disk.commoninit.id
-
-  # set to the libvirt network
+  # Set network parameters
   network_interface {
-    bridge    = var.svc_bridge
-    hostname  = var.machine_name
-    addresses = [var.svc_address]
-    mac       = var.svc_mac
+    network_id = data.vsphere_network.network.id
   }
 
-  console {
-    type        = "pty"
-    target_type = "serial"
-    target_port = "0"
-  }
-
+  # Use a predefined vmware template as main disk
   disk {
-    volume_id = libvirt_volume.image-qcow2.id
+    label = "${var.machine_image}.vmdk"
+    size = "100"
   }
 
-  graphics {
-    type        = "spice"
-    listen_type = "address"
-    autoport    = true
+  # create the VM from a template
+  clone {
+    template_uuid = data.vsphere_virtual_machine.template.id
+  }
+
+# Execute script on remote vm after this creation
+  provisioner "remote-exec" {
+    script = "script.sh"
+    connection {
+      type     = "ssh"
+      user     = "root"
+      password = "TEMPLATE"
+      host     = var.template_ip
+    }
   }
 }
 

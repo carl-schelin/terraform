@@ -2,7 +2,7 @@
 
 HERE=$(pwd)
 
-for i in boulder cabo tatooine longmont modules
+for i in denver boulder cabo tatooine longmont nederland modules
 do
   if [[ -d $i ]]
   then

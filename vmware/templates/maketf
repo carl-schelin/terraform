@@ -3,54 +3,61 @@
 # this creates a basic main.tf file. For any of the systems with a second interface (provisioning servers mainly),
 # create a maint_bridge, maint_address, and maint_mac line and point to the libvirt.two.tf template
 
-echo "terraform {"
-echo "  required_providers {"
-echo "    libvirt = {"
-echo "      source  = \"dmacvicar/libvirt\""
-echo "      version = \"0.6.10\""
-echo "    }"
-echo "  }"
-echo "}"
-echo ""
-
-for i in `cat server.data`
+for i in `sed -e "s/ //g" server.data | grep -v "^$" | grep -v "^#"`
 do
-  NUMBER=$(       echo $i | cut -f1 -d,)
-  MACHINE_NAME=$( echo $i | cut -f6 -d,)
-  SVC_BRIDGE=$(   echo $i | cut -f7 -d,)
-  SVC_MAC=$(      echo $i | cut -f8 -d,)
-  SVC_ADDRESS=$(  echo $i | cut -f9 -d,)
-  MAINT_BRIDGE=$( echo $i | cut -f11 -d,)
-  MAINT_MAC=$(    echo $i | cut -f12 -d,)
-  MAINT_ADDRESS=$(echo $i | cut -f13 -d,)
-  MACHINE_IMAGE=$(echo $i | cut -f15 -d,)
-  RAM_REQUEST=$(  echo $i | cut -f16 -d,)
-  CPU_REQUEST=$(  echo $i | cut -f17 -d,)
+  NUMBER=$(        echo $i | cut -f1 -d,)
+  ENVIRONMENT=$(   echo $i | cut -f2 -d,)
+  STORAGE=$(       echo $i | cut -f3 -d,)
+  APPLICATION=$(   echo $i | cut -f4 -d,)
+  APPTYPE=$(       echo $i | cut -f5 -d,)
+  MACHINE_NAME=$(  echo $i | cut -f6 -d,)
+  MACADDR=$(       echo $i | cut -f7 -d,)
+  IPADDR=$(        echo $i | cut -f8 -d,)
+  NETMASK=$(       echo $i | cut -f9 -d,)
+  NETWORK=$(       echo $i | cut -f10 -d,)
+  MACHINE_IMAGE=$( echo $i | cut -f11 -d,)
+  RAM_REQUEST=$(   echo $i | cut -f12 -d,)
+  CPU_REQUEST=$(   echo $i | cut -f13 -d,)
 
-  echo "module \"SITENAME-server-${NUMBER}\" {"
+  echo "module \"${ENVIRONMENT}-server-${NUMBER}\" {"
   echo "# load the module"
-  if [[ -z ${MAINT_BRIDGE} ]]
-  then
-    echo "  source = \"../../../../modules/single\""
-  else
-    echo "  source = \"../../../../modules/dual\""
-  fi
+  echo "  source = \"../../../../modules\""
   echo ""
   echo "# set the variables"
-  echo "  machine_name = \"${MACHINE_NAME}\""
-  echo "  svc_bridge = \"${SVC_BRIDGE}\""
-  echo "  svc_mac = \"${SVC_MAC}\""
-  echo "  svc_address = \"${SVC_ADDRESS}\""
-  if [[ ! -z ${MAINT_BRIDGE} ]]
+  echo "  module_name = \"${ENVIRONMENT}-${NUMBER}\""
+  echo "  data_center = \"Colorado\""
+  if [[ ${STORAGE} = 'NikiVMs' ]]
   then
-    echo "  maint_bridge = \"${MAINT_BRIDGE}\""
-    echo "  maint_mac = \"${MAINT_MAC}\""
-    echo "  maint_address = \"${MAINT_ADDRESS}\""
+    echo "  resource_pool = \"192.168.1.15/Resources\""
+  elif [[ ${STORAGE} = 'SlashVMs' ]]
+  then
+    echo "  resource_pool = \"192.168.1.20/Resources\""
+  elif [[ ${STORAGE} = 'MonkeyVMs' ]]
+  then
+    echo "  resource_pool = \"192.168.1.30/Resources\""
   fi
-  echo "  ram_request = \"${RAM_REQUEST}\""
-  echo "  cpu_request = \"${CPU_REQUEST}\""
+  echo "  data_store = \"${STORAGE}\""
+  echo "  system_network = \"${NETWORK} Network\""
   echo "  machine_image = \"${MACHINE_IMAGE}\""
-  echo "  user_data_path = \"\${path.module}/${MACHINE_NAME}.yaml\""
+  echo "  machine_name = \"${MACHINE_NAME}\""
+  echo "  cpu_request = \"${CPU_REQUEST}\""
+  echo "  ram_request = \"${RAM_REQUEST}\""
+  if [[ ${ENVIRONMENT} = 'boulder' ]]
+  then
+    echo "  template_ip = \"192.168.101.42\""
+  elif [[ ${ENVIRONMENT} = 'cabo' ]]
+  then
+    echo "  template_ip = \"192.168.102.42\""
+  elif [[ ${ENVIRONMENT} = 'tatooine' ]]
+  then
+    echo "  template_ip = \"192.168.103.42\""
+  elif [[ ${ENVIRONMENT} = 'longmont' ]]
+  then
+    echo "  template_ip = \"192.168.104.42\""
+  elif [[ ${ENVIRONMENT} = 'nederland' ]]
+  then
+    echo "  template_ip = \"192.168.105.42\""
+  fi
   echo "}"
   echo ""
 

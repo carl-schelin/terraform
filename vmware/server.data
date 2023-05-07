@@ -21,16 +21,16 @@
 10,  cabo,         NikiVMs,   kubernetes,    worker,   cabo0cuomknode3,  00:50:56:9b:02:0a,  192.168.102.165, 24,      QA,            cabo0cuomcentos7_morgan,  16384,   4
 11,  cabo,         MonkeyVMs, gitlab,        runner,   cabo0cuomglrunr1, 00:50:56:9b:02:0b,  192.168.102.54,  24,      QA,            cabo0cuomrocky8_monkey,    4096,   2
 
-02,  tatooine,     NikiVMs,   kubernetes,    storage,  tato0cuomnfs1,    00:50:56:9b:03:02,  192.168.103.170, 24,      Stage,         tato0cuomrocky8_morgan,   4096,   2
-03,  tatooine,     NikiVMs,   kubernetes,    haproxy,  tato0cuomhap1,    00:50:56:9b:03:03,  192.168.103.61,  24,      Stage,         tato0cuomrocky8_morgan,   4096,   2
-04,  tatooine,     NikiVMs,   kubernetes,    haproxy,  tato0cuomhap2,    00:50:56:9b:03:04,  192.168.103.62,  24,      Stage,         tato0cuomrocky8_morgan,   4096,   2
-05,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube1,   00:50:56:9b:03:05,  192.168.103.160, 24,      Stage,         tato0cuomcentos7_morgan,   8192,   4
-06,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube2,   00:50:56:9b:03:06,  192.168.103.161, 24,      Stage,         tato0cuomcentos7_morgan,   8192,   4
-07,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube3,   00:50:56:9b:03:07,  192.168.103.162, 24,      Stage,         tato0cuomcentos7_morgan,   8192,   4
-08,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode1,  00:50:56:9b:03:08,  192.168.103.163, 24,      Stage,         tato0cuomcentos7_morgan,  16384,   4
-09,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode2,  00:50:56:9b:03:09,  192.168.103.164, 24,      Stage,         tato0cuomcentos7_morgan,  16384,   4
-10,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode3,  00:50:56:9b:03:0a,  192.168.103.165, 24,      Stage,         tato0cuomcentos7_morgan,  16384,   4
-11,  tatooine,     MonkeyVMs, gitlab,        runner,   tato0cuomglrunr1, 00:50:56:9b:03:0b,  192.168.103.54,  24,      Stage,         tato0cuomrocky8_monkey,    4096,   2
+02,  tatooine,     NikiVMs,   kubernetes,    storage,  tato0cuomnfs1,    00:50:56:9b:03:02,  192.168.103.170, 24,      Staging,       tato0cuomrocky8_morgan,   4096,   2
+03,  tatooine,     NikiVMs,   kubernetes,    haproxy,  tato0cuomhap1,    00:50:56:9b:03:03,  192.168.103.61,  24,      Staging,       tato0cuomrocky8_morgan,   4096,   2
+04,  tatooine,     NikiVMs,   kubernetes,    haproxy,  tato0cuomhap2,    00:50:56:9b:03:04,  192.168.103.62,  24,      Staging,       tato0cuomrocky8_morgan,   4096,   2
+05,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube1,   00:50:56:9b:03:05,  192.168.103.160, 24,      Staging,       tato0cuomcentos7_morgan,   8192,   4
+06,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube2,   00:50:56:9b:03:06,  192.168.103.161, 24,      Staging,       tato0cuomcentos7_morgan,   8192,   4
+07,  tatooine,     NikiVMs,   kubernetes,    control,  tato0cuomkube3,   00:50:56:9b:03:07,  192.168.103.162, 24,      Staging,       tato0cuomcentos7_morgan,   8192,   4
+08,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode1,  00:50:56:9b:03:08,  192.168.103.163, 24,      Staging,       tato0cuomcentos7_morgan,  16384,   4
+09,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode2,  00:50:56:9b:03:09,  192.168.103.164, 24,      Staging,       tato0cuomcentos7_morgan,  16384,   4
+10,  tatooine,     NikiVMs,   kubernetes,    worker,   tato0cuomknode3,  00:50:56:9b:03:0a,  192.168.103.165, 24,      Staging,       tato0cuomcentos7_morgan,  16384,   4
+11,  tatooine,     MonkeyVMs, gitlab,        runner,   tato0cuomglrunr1, 00:50:56:9b:03:0b,  192.168.103.54,  24,      Staging,       tato0cuomrocky8_monkey,    4096,   2
 
 02,  longmont,     NikiVMs,   kubernetes,    storage,  lnmt1cuomnfs1,    00:50:56:9b:04:02,  192.168.104.170, 24,      Production,    lnmt1cuomrocky8_morgan,   4096,   2
 03,  longmont,     NikiVMs,   kubernetes,    haproxy,  lnmt1cuomhap1,    00:50:56:9b:04:03,  192.168.104.61,  24,      Production,    lnmt1cuomrocky8_morgan,   4096,   2

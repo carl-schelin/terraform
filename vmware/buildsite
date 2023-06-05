@@ -2,7 +2,7 @@
 
 if [[ ! -z ${1} ]]
 then
-  SERVERS=${1}
+  SERVERS=$(grep "^${1}," site.data | grep -v "^#" | sed -e "s/ //g")
 else
   SERVERS=$(grep -v "^#" site.data | sed -e "s/ //g")
 fi

@@ -35,6 +35,9 @@ variable "cpu_request" {
 variable "ram_request" {
 }
 
+variable "mac_address" {
+}
+
 variable "template_ip" {
 }
 
@@ -80,6 +83,7 @@ resource "vsphere_virtual_machine" "virtual_machine" {
   # Set network parameters
   network_interface {
     network_id = data.vsphere_network.network.id
+    mac_address = var.mac_address
   }
 
   # Use a predefined vmware template as main disk

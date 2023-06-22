@@ -42,6 +42,7 @@ do
   echo "  machine_name = \"${MACHINE_NAME}\""
   echo "  cpu_request = \"${CPU_REQUEST}\""
   echo "  ram_request = \"${RAM_REQUEST}\""
+  echo "  mac_address = \"${MACADDR}\""
   if [[ ${ENVIRONMENT} = 'boulder' ]]
   then
     echo "  template_ip = \"192.168.101.42\""

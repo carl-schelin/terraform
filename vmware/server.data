@@ -59,6 +59,9 @@
 11,  longmont,     MonkeyVMs, gitlab,        runner,       lnmt1cuomglrunr1, 00:50:56:9b:04:0b,  192.168.104.54,  24,      Production,    lnmt1cuomrocky8_monkey,    4096,   2
 12,  longmont,     MonkeyVMs, gitlab,        runner,       lnmt1cuomglrunr2, 00:50:56:9b:04:0c,  192.168.104.54,  24,      Production,    lnmt1cuomrocky8_monkey,    4096,   2
 13,  longmont,     SlashVMs,  database,      postgresql,   lnmt1cuompgrs1,   00:50:56:9b:04:0d,  192.168.104.99,  24,      Production,    lnmt1cuomrocky8_slash,     4096,   2
+14,  longmont,     MonkeyVMs, jenkins,       jenkins,      lnmt1cuomjkns1,   00:50:56:9b:04:0e,  192.168.104.83,  24,      Production,    lnmt1cuomrocky8_monkey,    4096,   2
+15,  longmont,     MonkeyVMs, jenkins,       jenkins,      lnmt1cuomjkns2,   00:50:56:9b:04:0f,  192.168.104.82,  24,      Production,    lnmt1cuomrocky8_monkey,    4096,   2
+16,  longmont,     MonkeyVMs, jenkins,       jenkins,      lnmt1cuomjkns3,   00:50:56:9b:04:10,  192.168.104.81,  24,      Production,    lnmt1cuomrocky8_monkey,    4096,   2
 
 
 02,  nederland,    MonkeyVMs, gitlab,        runner,       ndld1cuomglrunr1, 00:50:56:9b:05:02,  192.168.105.54,  24,      Home,          ndld1cuomrocky8_monkey,    4096,   2

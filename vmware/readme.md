@@ -29,9 +29,22 @@ out if I make a horrible mistake.
 
 ### Prerequesites
 
-You'll need to build the KVM host before you can run these. In my playbooks 
-repo, in the libvirt directory, check out the readme.md on which binary 
-files you need in order to prepare the KVM host.
+The repo should work with VMware, KVM, and even AWS, although that's more 
+of an in progress section right now.
+
+#### KVM
+
+You'll need to build the KVM host before you can run these. I actually have 
+a set of playbooks for building out a KVM server. Check the readme.md 
+on which binary files you need in order to prepare the KVM host.
+
+#### VMware
+
+The assumption is you already have a VMware environment.
+
+#### AWS
+
+Make sure you have an appropriate site to host the servers.
 
 ### Configuration
 

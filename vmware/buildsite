@@ -122,7 +122,7 @@ do
       DOMAIN="stage.internal.pri"
     elif [[ ${ENVIRONMENT} = 'longmont' ]]
     then
-      DOMAIN="internal.pri"
+      DOMAIN="internal.prod.pri"
     elif [[ ${ENVIRONMENT} = 'nederland' ]]
     then
       DOMAIN="home.internal.pri"

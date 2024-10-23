@@ -144,6 +144,9 @@
 51,  longmont,     SlashVMs,  management,    vault,        lnmt1cuomvault1,  00:50:56:9b:04:33,  192.168.104.118, 24,      Production,    lnmt1cuomrocky8_slash,     2048,   2
 52,  longmont,     MonkeyVMs, documents,     mediawiki,    lnmt1cuomwiki1,   00:50:56:9b:04:34,  192.168.104.103, 24,      Production,    lnmt1cuomrocky8_monkey,    2048,   2
 53,  longmont,     SlashVMs,  database,      mysql,        lnmt1cuomysql1,   00:50:56:9b:04:35,  192.168.104.85,  24,      Production,    lnmt1cuomrocky8_slash,     2048,   2
+54,  longmont,     MonkeyVMs, automation,    ansible,      lnmt1cuomaap1,    00:50:56:9b:04:36,  192.168.104.235, 24,      Production,    lnmt1cuomredhat9_monkey,   4096,   4
+55,  longmont,     MonkeyVMs, automation,    ansible,      lnmt1cuomaah1,    00:50:56:9b:04:37,  192.168.104.236, 24,      Production,    lnmt1cuomredhat9_monkey,   4096,   4
+56,  longmont,     MonkeyVMs, automation,    python,       lnmt1cuomnexus,   00:50:56:9b:04:38,  192.168.104.237, 24,      Production,    lnmt1cuomrocky8_monkey,    4096,   4
 
 
 02,  nederland,    MonkeyVMS, storage,       backups,      ndld1cuombackup1, 00:50:56:9b:05:02,  192.168.105.91,  24,      Home,          ndld1cuomrocky8_monkey,    2048,   2
